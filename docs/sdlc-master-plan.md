@@ -305,12 +305,12 @@ Returned for all `400`, `401`, `403`, `404`, `409`, and `500` responses:
   - [x] Initialize Spring Boot 3.x project dependencies (Web, Security, Validation, JPA, Flyway, PostgreSQL driver, Springdoc OpenAPI).  
   - [x] Provision base container configuration (`/infra/docker-compose.yml` for local PostgreSQL 16).  
   - [x] Draft initial migration script `src/main/resources/db/migration/V1__init_schema.sql`.  
-- [ ] **Milestone 2: Security, Authentication & Error Handling Layer**  
-  - [ ] Implement `@RestControllerAdvice` global exception handler returning the locked `Standard Error Envelope`.  
-  - [ ] Implement `JwtService` for stateless token signing, parsing, and claim validation.  
-  - [ ] Implement `JwtAuthenticationFilter` and hook into Spring Security filter chain.  
-  - [ ] Expose `POST /api/auth/register`, `POST /api/auth/login`, and `GET /api/auth/me`.  
-  - [ ] Apply method-level permissions (`@EnableMethodSecurity` / `@PreAuthorize`).  
+- [x] **Milestone 2: Security, Authentication & Error Handling Layer**  
+  - [x] Implement `@RestControllerAdvice` global exception handler returning the locked `Standard Error Envelope`.  
+  - [x] Implement `JwtService` for stateless token signing, parsing, and claim validation.  
+  - [x] Implement `JwtAuthenticationFilter` and hook into Spring Security filter chain.  
+  - [x] Expose `POST /api/auth/register`, `POST /api/auth/login`, and `GET /api/auth/me`.  
+  - [x] Apply method-level permissions (`@EnableMethodSecurity` / `@PreAuthorize`).  
 - [ ] **Milestone 3: Availability Engine & Slot Calculator**  
   - [ ] Build endpoints `GET /api/providers`, `GET /api/providers/{id}/schedule`, `PUT /api/providers/schedule`, and `GET /api/providers/{id}/slots?date=YYYY-MM-DD`.  
   - [ ] Implement dynamic slot generation algorithm within `SlotCalculationService`:  
@@ -452,7 +452,7 @@ Building both Provider and Client views in Next.js serves as a hands-on learning
 | **5\. API Contract (Endpoints & DTOs)** | `DONE` | Locked all `/api/auth`, `/api/providers`, `/api/appointments` DTOs & error envelope |
 | **6\. Review the Plan (Pre-Code Audit)** | `DONE` | Fixed timezone column gap, `CONFIRMED`+`IN_PROGRESS` slot exclusion, missing `/api/providers` endpoints, and v1 stateless JWT scope |
 | **7\. Project Skeletons & Local Env** | `DONE` | Scaffolded & verified `/infra` (PG 16 loopback compose), `/backend` (Spring Boot 3.5.16 + Flyway `V1__init_schema.sql`), `/web` (Next.js App Router + Tailwind tokens + locked API types), `/mobile` (Flutter feature-first + `AppTheme` + `Dio`/`TokenStorage`); `./mvnw test`, `tsc`/`lint`/`build`, `flutter analyze`/`test`, and `security_check.sh` all passed |
-| **8\. Backend Foundation & Auth** | `TODO` |  |
+| **8\. Backend Foundation & Auth** | `DONE` | `@RestControllerAdvice` envelope (+ 401/403 filter-chain handlers), `JwtService` (fail-fast ≥32-byte secret), `JwtAuthenticationFilter` (loads user from DB), `/api/auth/{register,login,me}`, `@EnableMethodSecurity`, BCrypt + timing-safe generic login failure. 13 tests pass (`./mvnw clean test`) + `security_check.sh` passed. Integration tests use H2 (PostgreSQL mode, Flyway off) since Docker is unavailable locally; Testcontainers-on-Postgres coverage of `idx_unique_active_slot` deferred to Step 9 |
 | **9\. Backend Core Domain & Logic** | `TODO` |  |
 | **10\. Web Frontend (Next.js)** | `TODO` |  |
 | **11\. Mobile App (Flutter)** | `TODO` |  |

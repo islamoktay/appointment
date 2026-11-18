@@ -5,3 +5,15 @@ app:
     expiration-seconds: 86400
   cors:
     allowed-origins: http://localhost:3000
+spring:
+  datasource:
+    # Fast MockMvc integration tests on H2 (PostgreSQL mode); Flyway SQL is Postgres-specific and is covered by BootstrapContractTest.
+    url: jdbc:h2:mem:testdb;MODE=PostgreSQL;DB_CLOSE_DELAY=-1
+    username: sa
+    password: ""
+    driver-class-name: org.h2.Driver
+  jpa:
+    hibernate:
+      ddl-auto: create-drop
+  flyway:
+    enabled: false
