@@ -15,6 +15,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - **Mobile (`/mobile`):** Scaffolded Flutter 3.x feature-first architecture (`core/`, `features/{auth,providers,booking,appointments}/`), shared `AppTheme` / `AppColors`, `Dio` client with auth interceptor, `flutter_secure_storage` token wrapper, locked `ApiException` parser, and accessibility/contract widget tests.
 - **Workspace Tooling:** Added root `Makefile` with unified targets (`db-up`, `db-down`, `backend-run`, `backend-test`, `web-dev`, `web-check`, `mobile-check`, `security`, `check`).
 - **Backend Auth & Error Layer:** Added stateless JWT security (`JwtService`, `JwtAuthenticationFilter`, `SecurityConfig` with CORS/method security), `POST /api/auth/register`, `POST /api/auth/login`, `GET /api/auth/me`, the locked standard error envelope via `GlobalExceptionHandler`, and JUnit/MockMvc tests (H2 test profile).
+- **Backend Core Domain:** Added provider directory/schedule/slot endpoints, `SlotCalculationService`, booking with 409 concurrency translation, appointment queue (`/me`, `start`, `complete`, `cancel`) with ownership checks and state machine, JUnit/MockMvc tests, and a Docker-gated Postgres constraint IT.
 
 ### Changed
 - Added `graphify-out/` to `.gitignore` and removed generated knowledge-graph cache files from Git tracking while keeping them locally on disk.

@@ -311,18 +311,18 @@ Returned for all `400`, `401`, `403`, `404`, `409`, and `500` responses:
   - [x] Implement `JwtAuthenticationFilter` and hook into Spring Security filter chain.  
   - [x] Expose `POST /api/auth/register`, `POST /api/auth/login`, and `GET /api/auth/me`.  
   - [x] Apply method-level permissions (`@EnableMethodSecurity` / `@PreAuthorize`).  
-- [ ] **Milestone 3: Availability Engine & Slot Calculator**  
-  - [ ] Build endpoints `GET /api/providers`, `GET /api/providers/{id}/schedule`, `PUT /api/providers/schedule`, and `GET /api/providers/{id}/slots?date=YYYY-MM-DD`.  
-  - [ ] Implement dynamic slot generation algorithm within `SlotCalculationService`:  
-    - [ ] Reject or return empty slots for dates in the past relative to the provider's configured IANA `timezone`.  
-    - [ ] Map requested `date` to ISO numeric `day_of_week` (`1 = Monday` .. `7 = Sunday`).  
-    - [ ] Generate uniform time windows of `slot_duration_minutes` from `start_time` to `end_time` (where `slotEnd <= end_time`).  
-    - [ ] Strip past slots if the target date is today in the provider's `timezone`.  
-    - [ ] Exclude slots matching active **`CONFIRMED` or `IN_PROGRESS`** records in `appointments`.  
-- [ ] **Milestone 4: Booking Orchestration & Concurrency Guard**  
-  - [ ] Implement `POST /api/appointments` inside a `@Transactional` context (validating the requested slot exists in the provider's schedule and is not in the past).  
-  - [ ] Capture relational race conditions (`DataIntegrityViolationException` / `OptimisticLockingFailureException`) triggered by `idx_unique_active_slot` and translate them into `HTTP 409 Conflict` error envelopes.  
-  - [ ] Implement management routes: `GET /api/appointments/me`, `PATCH /api/appointments/{id}/start`, `PATCH /api/appointments/{id}/complete`, and `PATCH /api/appointments/{id}/cancel`.
+- [x] **Milestone 3: Availability Engine & Slot Calculator**  
+  - [x] Build endpoints `GET /api/providers`, `GET /api/providers/{id}/schedule`, `PUT /api/providers/schedule`, and `GET /api/providers/{id}/slots?date=YYYY-MM-DD`.  
+  - [x] Implement dynamic slot generation algorithm within `SlotCalculationService`:  
+    - [x] Reject or return empty slots for dates in the past relative to the provider's configured IANA `timezone`.  
+    - [x] Map requested `date` to ISO numeric `day_of_week` (`1 = Monday` .. `7 = Sunday`).  
+    - [x] Generate uniform time windows of `slot_duration_minutes` from `start_time` to `end_time` (where `slotEnd <= end_time`).  
+    - [x] Strip past slots if the target date is today in the provider's `timezone`.  
+    - [x] Exclude slots matching active **`CONFIRMED` or `IN_PROGRESS`** records in `appointments`.  
+- [x] **Milestone 4: Booking Orchestration & Concurrency Guard**  
+  - [x] Implement `POST /api/appointments` inside a `@Transactional` context (validating the requested slot exists in the provider's schedule and is not in the past).  
+  - [x] Capture relational race conditions (`DataIntegrityViolationException` / `OptimisticLockingFailureException`) triggered by `idx_unique_active_slot` and translate them into `HTTP 409 Conflict` error envelopes.  
+  - [x] Implement management routes: `GET /api/appointments/me`, `PATCH /api/appointments/{id}/start`, `PATCH /api/appointments/{id}/complete`, and `PATCH /api/appointments/{id}/cancel`.
 
 ---
 
@@ -453,7 +453,7 @@ Building both Provider and Client views in Next.js serves as a hands-on learning
 | **6\. Review the Plan (Pre-Code Audit)** | `DONE` | Fixed timezone column gap, `CONFIRMED`+`IN_PROGRESS` slot exclusion, missing `/api/providers` endpoints, and v1 stateless JWT scope |
 | **7\. Project Skeletons & Local Env** | `DONE` | Scaffolded & verified `/infra` (PG 16 loopback compose), `/backend` (Spring Boot 3.5.16 + Flyway `V1__init_schema.sql`), `/web` (Next.js App Router + Tailwind tokens + locked API types), `/mobile` (Flutter feature-first + `AppTheme` + `Dio`/`TokenStorage`); `./mvnw test`, `tsc`/`lint`/`build`, `flutter analyze`/`test`, and `security_check.sh` all passed |
 | **8\. Backend Foundation & Auth** | `DONE` | `@RestControllerAdvice` envelope (+ 401/403 filter-chain handlers), `JwtService` (fail-fast ≥32-byte secret), `JwtAuthenticationFilter` (loads user from DB), `/api/auth/{register,login,me}`, `@EnableMethodSecurity`, BCrypt + timing-safe generic login failure. 13 tests pass (`./mvnw clean test`) + `security_check.sh` passed. Integration tests use H2 (PostgreSQL mode, Flyway off) since Docker is unavailable locally; Testcontainers-on-Postgres coverage of `idx_unique_active_slot` deferred to Step 9 |
-| **9\. Backend Core Domain & Logic** | `TODO` |  |
+| **9\. Backend Core Domain & Logic** | `DONE` | `SlotCalculationService` (provider IANA zone, injected `Clock`, remainder dropped, active-slot exclusion); provider/schedule/slots endpoints (atomic schedule replace; 400 on duplicate day, bad window/duration/tz); booking in `@Transactional` with pre-check + `saveAndFlush` race → sanitized 409; `/api/appointments/{me,start,complete,cancel}` with principal-derived ownership (403) and state machine (409). 25 tests + `security_check.sh` pass. `PostgresSlotConstraintIT` (Testcontainers) written but skipped locally (no Docker) — run it where Docker exists |
 | **10\. Web Frontend (Next.js)** | `TODO` |  |
 | **11\. Mobile App (Flutter)** | `TODO` |  |
 | **12\. Cross-Platform E2E QA** | `TODO` |  |

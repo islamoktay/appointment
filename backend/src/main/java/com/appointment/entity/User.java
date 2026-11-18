@@ -56,6 +56,8 @@ public class User {
         }
     }
 
+    public void setTimezone(String timezone) { this.timezone = timezone; }
+
     public UUID getId() { return id; }
     public String getEmail() { return email; }
     public String getPasswordHash() { return passwordHash; }
