@@ -51,9 +51,11 @@
 
 ## **6\. Review the Plan (Pre-Code Audit)**
 
-* **What to do:** Pause before writing code (or over-building process tooling) to critically audit the Master Plan, catch contradictions between sections, and right-size scope.  
+* **What to do:** Pause before writing code (or over-building process tooling) to run a **Red-Team Spec Audit** (`business-analyst` skill) on the Master Plan, catch contradictions between sections, and right-size scope.  
 * **What it should mention:**  
-  * **Schema vs. Logic Alignment:** Verify every rule promised in prose (e.g., IANA timezone handling, status exclusions in queries vs. partial unique indexes) is actually backed by columns and constraints in the SQL schema.  
+  * **Zero-Ceremony Red-Team Audit:** Never generate separate BA/Tech Lead handoff memos that compete with the Master Plan. Have the `business-analyst` and `security-auditor` skills skip summaries, surface only unhandled domain edge cases or security holes as concrete decision questions, and patch the answers directly into `docs/sdlc-master-plan.md`.  
+  * **Security Red-Line Audit (`security-auditor` & `scripts/security_check.sh`):** Verify the Master Plan locks anti-IDOR ownership rules (always extracting actor IDs from the server JWT principal, never from request bodies), fail-fast `JWT_SECRET` (no `${JWT_SECRET:default}` fallback in main config), Next.js BFF `HttpOnly` cookie-to-Bearer forwarding, BCrypt 72-byte / array size DoS bounds, Actuator `health`-only lockdown, sanitized error envelopes, and `127.0.0.1`/internal DB port isolation. Pair the skill with an executable `scripts/security_check.sh` scanner so checks are deterministic rather than prose-only.  
+  * **Schema vs. Logic Alignment:** Verify every rule promised in prose (e.g., IANA timezone handling, status exclusions in queries vs. partial unique indexes, state machine guards) is backed by columns and constraints in the SQL schema.  
   * **Cross-Phase Endpoint Parity:** Verify every endpoint consumed by Web or Mobile phases is explicitly listed in the Backend implementation checklist with locked DTOs.  
   * **Scope & Learning Balance:** Strip accidental scope creep (e.g., complex refresh-token rotation when stateless JWT suffices for v1) while keeping hands-on learning goals intact.
 
@@ -63,7 +65,7 @@
 * **What it should mention:**  
   * **Git & Docs Sync:** Run `git init`, add a root `.gitignore`, and sync `docs/sdlc-master-plan.md` and `docs/full-stack-project-playbook.md` into `/docs`.  
   * **Lean Root `/AGENTS.md` (Pointer-Based):** Create `/AGENTS.md` defining documentation governance (Playbook = generic blueprint; Master Plan = project Single Source of Truth) and repo routing without duplicating spec tables from the Master Plan.  
-  * **100% Project-Agnostic AI Skills (`/.agent/skills/`):** Package role skills (`business-analyst`, `tech-lead`) and stack skills (`spring-boot-architecture`, `nextjs-app-router`, `flutter-bloc-clean`) so they contain zero project-specific domain terms and can be copied directly into future repositories. Avoid ceremonial BA/Tech Lead handoff paperwork when simple direct execution suffices.  
+  * **100% Project-Agnostic, Zero-Ceremony AI Skills (`/.agent/skills/`):** Package role skills (`business-analyst` for Step 6 spec auditing; `tech-lead` for Steps 7–13 direct milestone execution & verification; `security-auditor` for enforcing the 6 catastrophic security red lines across spec and code) and stack skills (`spring-boot-architecture`, `nextjs-app-router`, `flutter-bloc-clean`) with zero project-specific domain terms so they can be copied into any future repository.  
   * **Database & Project Skeletons:** Local PostgreSQL via `docker-compose.yml`, plus initialized `/backend`, `/web`, and `/mobile` apps with `.env.example` templates, linters, and health check endpoints.
 
 ## **8\. Build Backend Foundation (Auth, Security & Base Plumbing)**

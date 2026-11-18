@@ -148,10 +148,31 @@ Flow B (Client Journey - Next.js Web & Flutter Mobile):
 * **Queue Management & State Machine:**
   * Each active appointment on a given date is ordered chronologically by `start_time` as the provider's daily queue.
   * Valid transitions:
-    * `CONFIRMED` \-\> `IN_PROGRESS` (`PROVIDER` only)
-    * `IN_PROGRESS` \-\> `COMPLETED` (`PROVIDER` only)
+    * `CONFIRMED` \-\> `IN_PROGRESS` (`PROVIDER` only; allowed on any `CONFIRMED` booking regardless of date for v1 demo/testing flexibility)
+    * `IN_PROGRESS` \-\> `COMPLETED` (`PROVIDER` only; allowed on any `IN_PROGRESS` booking regardless of date)
     * `CONFIRMED` or `IN_PROGRESS` \-\> `CANCELLED` (`CLIENT` or `PROVIDER` owning the record; cancelling reopens the slot if still in the future)
     * Terminal states (`COMPLETED`, `CANCELLED`) cannot transition further (`400 Bad Request` / `409 Conflict`).
+* **Locked Domain Edge-Case Rules (v1):**
+  1. **Shift Remainder Handling:** `SlotCalculationService` generates full uniform slots where `slotEnd <= shiftEndTime` and silently drops any trailing remainder shorter than `slot_duration_minutes`.
+  2. **Schedule Edits vs. Existing Bookings:** Updating a provider's weekly schedule (`PUT /api/providers/schedule`) only affects future slot generation; existing `CONFIRMED` / `IN_PROGRESS` appointments remain intact on the provider's queue unless explicitly cancelled.
+  3. **Concurrency Guard Scope:** Concurrency uniqueness (`idx_unique_active_slot`) is strictly scoped to provider slots `(provider_id, appointment_date, start_time)`. Same-client overlapping bookings across different providers are permitted in v1.
+  4. **Bookable Horizon & Cutoff:** Any non-past slot (`appointmentDate > today`, or `appointmentDate == today` and `startTime > currentTime` in the provider's IANA timezone) is bookable with no upper date-horizon cap in v1.
+* **Locked Security Red-Line Invariants (`security-auditor` & `scripts/security_check.sh`):**
+  1. **Zero Hardcoded Secrets & Fail-Fast `JWT_SECRET`:** `JWT_SECRET` ($\ge$ 256-bit / 32+ bytes) and DB credentials must load strictly from environment variables with **no default fallback** in `application.yml` (fail-fast at startup if missing; test secret allowed only in `application-test.yml`). Never log tokens, passwords, or `Authorization` headers (`requestHeader: false` in Flutter `Dio` logs).
+  2. **Principal Extraction & Anti-IDOR (BOLA) Ownership Enforcement:**
+     * Never accept `clientId` on `POST /api/appointments` or `providerId` on `PUT /api/providers/schedule` from the request payload—always extract the acting user's `UUID` from the verified server-side JWT `SecurityContext`.
+     * `PATCH /api/appointments/{id}/start` and `/complete` must verify `appointment.providerId == currentUserId` (returning `403 Forbidden` otherwise).
+     * `PATCH /api/appointments/{id}/cancel` must verify `appointment.clientId == currentUserId || appointment.providerId == currentUserId` (returning `403 Forbidden` otherwise).
+  3. **Input Size DoS Bounds & Actuator Lockdown:**
+     * Enforce `@Size(min = 8, max = 72)` on password fields (preventing BCrypt 72-byte CPU DoS bombs) and `@Size(max = 7)` on schedule `days` arrays.
+     * Hard-lock Spring Boot Actuator to `management.endpoints.web.exposure.include=health` only (never `*`, `env`, or `heapdump`).
+  4. **Hardened Auth, Next.js BFF Cookie-to-Bearer Pattern & Mobile Secure Storage:**
+     * Passwords hashed via `BCrypt`; failed logins always return a generic `401 Unauthorized` (`"Invalid email or password"`) to prevent user enumeration.
+     * Next.js stores JWTs exclusively in `HttpOnly`, `SameSite=Lax`, `Path=/`, `Secure` (in prod) cookies via server Route Handlers (never `localStorage`). Next.js Server Components/Route Handlers act as a **BFF** that reads the `HttpOnly` cookie server-side and sends `Authorization: Bearer <jwt>` to Spring Boot, keeping the backend 100% stateless Bearer-only with zero CSRF/cookie surface.
+     * Flutter stores JWTs exclusively in `flutter_secure_storage`.
+  5. **Sanitized Error Envelope & Network Isolation:**
+     * `@RestControllerAdvice` must never leak SQL queries, constraint names, or Java stack traces to clients on `409` or `500` errors.
+     * `docker-compose.yml` must bind PostgreSQL `5432` strictly to `127.0.0.1:5432:5432` locally (or internal Docker network in prod), never `0.0.0.0:5432`.
 
 ## **Database Schema (PostgreSQL — Flyway `V1__init_schema.sql`)**
 

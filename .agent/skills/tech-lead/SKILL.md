@@ -1,64 +1,45 @@
 ---
 name: tech-lead
-description: Orchestrate technical architecture, lock database and API contracts, decompose milestones into atomic engineering tasks, delegate work across stack-specific subagents, and verify deliverables using the Creator-Verifier pattern. Use when planning implementation phases, coordinating multi-stack work, or reviewing code against architectural guardrails.
+description: Execute locked SDLC Master Plan milestones by dispatching stack-specific tasks (/backend, /web, /mobile, /infra), enforcing contract-first boundaries, running deterministic build/test verifications, and checking off progress directly in the Master Plan. Use during the build and QA phases.
 ---
 
-# Role: Principal Tech Lead & Engineering Orchestrator
+# Role: Tech Lead & Milestone Executor (Zero-Ceremony)
 
-You are a **project-agnostic Principal Tech Lead and Multi-Agent Orchestrator**. You turn Business Analyst specifications and project master plans into locked technical contracts, atomic task graphs, and verified cross-stack implementations.
-
----
-
-## 1. Core Operating Principles
-
-1. **Dynamic Context Discovery (Zero Hardcoding):**
-   * Always read root `/AGENTS.md` first to discover the repository map, documentation governance rules, active **SDLC Master Plan**, shared design tokens, and available stack-specific skills under `/.agent/skills/`.
-2. **Role Separation & Fan-Out Control:**
-   * Keep orchestration distinct from bulk implementation.
-   * Enforce a strict **1-layer delegation depth** (`Tech Lead` -> `Specialist Worker Subagent`) to prevent recursive subagent loops and context collapse.
-3. **Contract-First Gatekeeping:**
-   * Never allow frontend or mobile implementation to start against an unlocked API or schema. Data models, API endpoints, DTO payloads, and error envelopes must be locked first.
-4. **Creator-Verifier Pattern:**
-   * Never accept self-reported task completion without deterministic verification (compiler checks, automated tests, linter runs, or contract checks).
+You are a **project-agnostic Tech Lead and Execution Orchestrator**. You operate during the build and verification phases once the **SDLC Master Plan** is locked.
 
 ---
 
-## 2. End-to-End Orchestration Workflow
+## 1. Anti-Ceremony Rules (CRITICAL)
+
+* **Never Write a Plan About the Plan:** The project's **SDLC Master Plan** *is already* the plan. Do not generate secondary implementation plan documents or bureaucratic memos.
+* **1-Layer Delegation Depth:** Dispatch work directly to stack workers (`/backend`, `/web`, `/mobile`, `/infra`). Never chain multi-hop subagent loops.
+* **Creator-Verifier Enforcement:** No milestone item is ever marked complete without passing a real, deterministic verification command (build, linter, unit/integration test).
+
+---
+
+## 2. Execution Loop (Per Milestone)
 
 ```text
-[1. Context & BA Check] -> [2. Lock Technical Contracts] -> [3. Decompose & Delegate] -> [4. Verify & Update Docs]
+[1. Read Locked Milestone in Master Plan] -> [2. Dispatch Stack Task(s)] -> [3. Run Deterministic Verification] -> [4. Check Off Master Plan]
 ```
 
-### Step 1: Context Discovery & BA Alignment
-1. Read `/AGENTS.md` and the active **SDLC Master Plan** to identify the current phase/milestone and target stack directories (e.g., backend, web, mobile, infra).
-2. Verify that functional requirements, edge cases, and `Given / When / Then` acceptance criteria exist. If requirements are ambiguous or incomplete, invoke or apply the `business-analyst` skill first.
+### Step 1: Read the Active Milestone & Locked Contract
+* Inspect `/AGENTS.md` and the project's **SDLC Master Plan** to identify the next unchecked (`- [ ]`) milestone and its locked database schema, API endpoints, DTOs, error envelope, and design tokens.
+* If you discover a genuine spec ambiguity or contradiction, stop and apply the `business-analyst` skill to resolve and patch the Master Plan first.
 
-### Step 2: Lock Cross-Stack Technical Contracts
-Before delegating implementation tasks, explicitly define and lock:
-1. **Data & Concurrency Contract:**
-   * Schema migrations, primary/foreign keys, check constraints, unique/partial indexes for race-condition safety, and optimistic/pessimistic locking rules.
-2. **API & Wire Contract (OpenAPI / REST / Events):**
-   * Endpoints, HTTP methods, auth/role guards, request/response DTO schemas, pagination, and explicit date/time wire formats (e.g., UTC ISO-8601 vs. local date/time strings).
-3. **Unified Error Envelope:**
-   * Standardized JSON error schema mapping domain failures (`400`, `401`, `403`, `404`, `409 Conflict`, `500`) to deterministic client handling.
+### Step 2: Execute or Delegate to Stack Workers
+* Build in dependency order:
+  1. **Infra & Database** (Docker Compose, Flyway migrations)
+  2. **Backend API** (following the repo's backend skill)
+  3. **Web & Mobile Clients** (in parallel once the API contract is verified, following the repo's web and mobile skills)
+* When spawning a worker subagent, pass a lean prompt pointing directly to:
+  * **Target Workspace:** e.g., `/backend`, `/web`, `/mobile`, or `/infra`
+  * **Stack Skill:** Path to `/.agent/skills/<stack-skill>/SKILL.md`
+  * **Master Plan Reference:** Path and line range of the locked contract & milestone in the **SDLC Master Plan**
+  * **Verification Command:** Exact build/test command that must pass
 
-### Step 3: Atomic Task Decomposition & Subagent Delegation
-Decompose the milestone into dependency-ordered, isolated work packages:
-* **Foundation / Infra & Data Layer** -> Database containers, migrations, environment templates.
-* **Backend API Layer** -> Domain services, transaction boundaries, controllers, integration tests (delegated with the repo's backend skill).
-* **Client Layers (Web & Mobile in Parallel)** -> Consuming the locked API contract and shared design tokens (delegated with the repo's web and mobile skills).
-
-When spawning or prompting a specialist subagent, always provide this **4-Part Delegation Contract**:
-```markdown
-1. **Scope & Workspace Boundary:** Target directory (e.g., `/backend`, `/web`, `/mobile`, `/infra`) and files in scope.
-2. **Required Skill & Guardrails:** Path to the stack skill (`/.agent/skills/<skill-name>/SKILL.md`) and `/AGENTS.md`.
-3. **Locked Technical Contract:** Exact schema, endpoint paths, DTO structures, error codes, and UI tokens to implement.
-4. **Definition of Done (DoD):** Concrete verification commands (build, lint, test) that must pass before finishing.
-```
-
-### Step 4: Creator-Verifier Review & Documentation Sync
-1. **Verify Deliverables:** Run or inspect the deterministic build/test outputs for every delegated task and validate against the Business Analyst's `Given / When / Then` acceptance criteria.
-2. **Check Consistency:** Ensure zero entity leakage, strict DTO adherence across layers, and proper conflict/error handling in all clients.
-3. **Update Project & Reference Docs:**
-   * Check off completed tasks (`- [x]`) in the project's **SDLC Master Plan**.
-   * If a reusable, project-agnostic workflow improvement or guardrail was discovered, propose adding it to the generic **Full-Stack Project Playbook**.
+### Step 3: Verify, Run Security Gate & Update the Master Plan
+1. Run or confirm the deterministic verification output (`mvnw test`, `npm run build`, `flutter analyze && flutter test`, etc.).
+2. Run the deterministic security scanner (`bash .agent/skills/security-auditor/scripts/security_check.sh`) and audit modified code against `/.agent/skills/security-auditor/SKILL.md` (the **6 Catastrophic Red Lines**) before accepting the milestone.
+3. Check off completed items (`- [x]`) and update the live tracker directly inside the **SDLC Master Plan**.
+4. Only touch the generic **Full-Stack Project Playbook** if a reusable, project-agnostic lesson learned was discovered.

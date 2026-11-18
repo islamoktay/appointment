@@ -19,8 +19,9 @@ Always respect the strict separation between the two core documents in `/docs` (
 ```text
 /
 ├── /.agent/skills/                  # 100% Project-Agnostic, Reusable AI Skills
-│   ├── /business-analyst/           # Requirements auditing, invariants, state machines & BDD specs
-│   ├── /tech-lead/                  # Contract gatekeeping, task decomposition & subagent orchestration
+│   ├── /business-analyst/           # Red-team spec auditing, domain invariants & edge cases
+│   ├── /tech-lead/                  # Direct milestone execution, subagent delegation & verification
+│   ├── /security-auditor/           # Catastrophic security red-lines (secrets, IDOR, auth, infra)
 │   ├── /spring-boot-architecture/   # Java 21+ / Spring Boot 3.x / Flyway / DTO & testing rules
 │   ├── /nextjs-app-router/          # Next.js App Router / TypeScript / Tailwind / Cookie auth rules
 │   └── /flutter-bloc-clean/         # Flutter 3.x / Feature-first BLoC / Dio / Secure storage rules
