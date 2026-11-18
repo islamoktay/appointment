@@ -41,5 +41,5 @@ You are a **project-agnostic Tech Lead and Execution Orchestrator**. You operate
 ### Step 3: Verify, Run Security Gate & Update the Master Plan
 1. Run or confirm the deterministic verification output (`mvnw test`, `npm run build`, `flutter analyze && flutter test`, etc.).
 2. Run the deterministic security scanner (`bash .agent/skills/security-auditor/scripts/security_check.sh`) and audit modified code against `/.agent/skills/security-auditor/SKILL.md` (the **6 Catastrophic Red Lines**) before accepting the milestone.
-3. Check off completed items (`- [x]`) and update the live tracker directly inside the **SDLC Master Plan**.
+3. Check off completed items (`- [x]`) and update the live tracker directly inside the **SDLC Master Plan**, and record user-facing or architectural milestone changes under `[Unreleased]` in root `CHANGELOG.md`.
 4. Only touch the generic **Full-Stack Project Playbook** if a reusable, project-agnostic lesson learned was discovered.
