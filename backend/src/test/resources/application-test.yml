@@ -1,0 +1,7 @@
+app:
+  jwt:
+    # Test-only secret (>= 32 bytes / 256 bits) — never used outside test profile
+    secret: test-only-jwt-secret-key-with-at-least-32-bytes-length-123456
+    expiration-seconds: 86400
+  cors:
+    allowed-origins: http://localhost:3000

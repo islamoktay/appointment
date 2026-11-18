@@ -1,0 +1,30 @@
+@import "tailwindcss";
+
+:root {
+  --color-brand-hex: #0f172a;
+  --color-surface-hex: #f8fafc;
+  --color-confirmed-hex: #059669;
+  --color-pending-hex: #d97706;
+  --color-cancelled-hex: #e11d48;
+  --color-completed-hex: #475569;
+}
+
+@theme inline {
+  --color-brand: var(--color-brand-hex);
+  --color-surface: var(--color-surface-hex);
+  --color-confirmed: var(--color-confirmed-hex);
+  --color-pending: var(--color-pending-hex);
+  --color-cancelled: var(--color-cancelled-hex);
+  --color-completed: var(--color-completed-hex);
+
+  --font-sans: var(--font-geist-sans), ui-sans-serif, system-ui, sans-serif;
+  --font-mono: var(--font-geist-mono), ui-monospace, monospace;
+
+  --radius-control: 0.5rem;
+  --radius-card: 0.75rem;
+}
+
+body {
+  background-color: var(--color-surface-hex);
+  color: var(--color-brand-hex);
+}

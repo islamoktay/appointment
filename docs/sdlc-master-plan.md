@@ -301,10 +301,10 @@ Returned for all `400`, `401`, `403`, `404`, `409`, and `500` responses:
 
 ## **Backend Execution Checklist**
 
-- [ ] **Milestone 1: Project Bootstrap & Migration Engine**  
-  - [ ] Initialize Spring Boot 3.x project dependencies (Web, Security, Validation, JPA, Flyway, PostgreSQL driver, Springdoc OpenAPI).  
-  - [ ] Provision base container configuration (`/infra/docker-compose.yml` for local PostgreSQL 16).  
-  - [ ] Draft initial migration script `src/main/resources/db/migration/V1__init_schema.sql`.  
+- [x] **Milestone 1: Project Bootstrap & Migration Engine**  
+  - [x] Initialize Spring Boot 3.x project dependencies (Web, Security, Validation, JPA, Flyway, PostgreSQL driver, Springdoc OpenAPI).  
+  - [x] Provision base container configuration (`/infra/docker-compose.yml` for local PostgreSQL 16).  
+  - [x] Draft initial migration script `src/main/resources/db/migration/V1__init_schema.sql`.  
 - [ ] **Milestone 2: Security, Authentication & Error Handling Layer**  
   - [ ] Implement `@RestControllerAdvice` global exception handler returning the locked `Standard Error Envelope`.  
   - [ ] Implement `JwtService` for stateless token signing, parsing, and claim validation.  
@@ -333,7 +333,7 @@ Returned for all `400`, `401`, `403`, `404`, `409`, and `500` responses:
 Building both Provider and Client views in Next.js serves as a hands-on learning track for Next.js App Router patterns (Server Components, Client Components, dynamic `[id]` routes, Route Handlers, and role-aware `middleware.ts`).
 
 - [ ] **Milestone 1: Design System & Core Layouts**  
-  - [ ] Configure Tailwind design tokens (colors, typography, radii).  
+  - [x] Configure Tailwind design tokens (colors, typography, radii).  
   - [ ] Build reusable UI primitives: `Button`, `Input`, `Card`, `Badge`, `Modal`.  
   - [ ] Establish base layout shell with navigation bar and stateful header.  
 - [ ] **Milestone 2: Authentication & Role-Based Route Guards**  
@@ -357,10 +357,10 @@ Building both Provider and Client views in Next.js serves as a hands-on learning
 
 ## **Mobile Application Strategy**
 
-- [ ] **Milestone 1: Architecture & Network Plumbing**  
-  - [ ] Scaffold feature-first structure: `core/`, `features/auth/`, `features/providers/`, `features/booking/`, `features/appointments/`.  
-  - [ ] Define global `ThemeData` aligning with shared brand design tokens.  
-  - [ ] Configure `Dio` instance equipped with automatic auth interceptors and token storage via `flutter_secure_storage`.  
+- [x] **Milestone 1: Architecture & Network Plumbing**  
+  - [x] Scaffold feature-first structure: `core/`, `features/auth/`, `features/providers/`, `features/booking/`, `features/appointments/`.  
+  - [x] Define global `ThemeData` aligning with shared brand design tokens.  
+  - [x] Configure `Dio` instance equipped with automatic auth interceptors and token storage via `flutter_secure_storage`.  
 - [ ] **Milestone 2: Mobile Authentication Flow**  
   - [ ] Implement UI screens for Login and Registration.  
   - [ ] Integrate BLoC state management to handle authentication lifecycle states (`Unauthenticated`, `Authenticating`, `Authenticated`).  
@@ -451,7 +451,7 @@ Building both Provider and Client views in Next.js serves as a hands-on learning
 | **4\. Design System & UI/UX Wireframes** | `DONE` | Locked semantic color tokens, radii, and required Loading/Empty/409 Conflict states |
 | **5\. API Contract (Endpoints & DTOs)** | `DONE` | Locked all `/api/auth`, `/api/providers`, `/api/appointments` DTOs & error envelope |
 | **6\. Review the Plan (Pre-Code Audit)** | `DONE` | Fixed timezone column gap, `CONFIRMED`+`IN_PROGRESS` slot exclusion, missing `/api/providers` endpoints, and v1 stateless JWT scope |
-| **7\. Project Skeletons & Local Env** | `DOING` | Initialized Git, `/AGENTS.md`, project-agnostic `/.agent/skills/`; next: `/infra`, `/backend`, `/web`, `/mobile` skeletons |
+| **7\. Project Skeletons & Local Env** | `DONE` | Scaffolded & verified `/infra` (PG 16 loopback compose), `/backend` (Spring Boot 3.5.16 + Flyway `V1__init_schema.sql`), `/web` (Next.js App Router + Tailwind tokens + locked API types), `/mobile` (Flutter feature-first + `AppTheme` + `Dio`/`TokenStorage`); `./mvnw test`, `tsc`/`lint`/`build`, `flutter analyze`/`test`, and `security_check.sh` all passed |
 | **8\. Backend Foundation & Auth** | `TODO` |  |
 | **9\. Backend Core Domain & Logic** | `TODO` |  |
 | **10\. Web Frontend (Next.js)** | `TODO` |  |
