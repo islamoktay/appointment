@@ -332,24 +332,24 @@ Returned for all `400`, `401`, `403`, `404`, `409`, and `500` responses:
 
 Building both Provider and Client views in Next.js serves as a hands-on learning track for Next.js App Router patterns (Server Components, Client Components, dynamic `[id]` routes, Route Handlers, and role-aware `middleware.ts`).
 
-- [ ] **Milestone 1: Design System & Core Layouts**  
+- [x] **Milestone 1: Design System & Core Layouts**  
   - [x] Configure Tailwind design tokens (colors, typography, radii).  
-  - [ ] Build reusable UI primitives: `Button`, `Input`, `Card`, `Badge`, `Modal`.  
-  - [ ] Establish base layout shell with navigation bar and stateful header.  
-- [ ] **Milestone 2: Authentication & Role-Based Route Guards**  
-  - [ ] Construct `/login` and `/register` client views with form validation.  
-  - [ ] Implement Route Handlers (`/api/auth/session`) to store JWTs inside secure `HTTP-Only` cookies.  
-  - [ ] Write Next.js `middleware.ts` to enforce role-aware redirects (`PROVIDER` \-\> `/provider/dashboard`, `/provider/schedule`; `CLIENT` \-\> `/providers`, `/my-bookings`).  
-- [ ] **Milestone 3: Provider Schedule Configuration Workspace (`/provider/schedule`)**  
-  - [ ] Build interactive weekly availability grid.  
-  - [ ] Provide day toggle controls, time pickers (`startTime`, `endTime`), and slot length selectors (`15m`, `30m`, `60m`).  
-  - [ ] Wire form actions to `PUT /api/providers/schedule`.  
-- [ ] **Milestone 4: Provider Operational Dashboard (`/provider/dashboard`)**  
-  - [ ] Implement Server Components to pre-fetch daily schedules and booking queues (`GET /api/appointments/me?date=YYYY-MM-DD`).  
-  - [ ] Integrate interactive state toggles (`Start`, `Complete`, `Cancel`) with optimistic UI updates and server action revalidation for live queue management.  
-- [ ] **Milestone 5: Client Booking & Appointment Hub (`/providers` & `/my-bookings`)**  
-  - [ ] Build Provider Directory page (`/providers`) and interactive Slot Picker view (`/providers/[id]`) with date selector, available slot grid, and `409 Conflict` alert \+ automatic slot refresh.  
-  - [ ] Build Client Appointment Hub (`/my-bookings`) with `Upcoming` and `Past` tabs and self-service cancellation modal.
+  - [x] Build reusable UI primitives: `Button`, `Input`, `Card`, `Badge`, `Modal`.  
+  - [x] Establish base layout shell with navigation bar and stateful header.  
+- [x] **Milestone 2: Authentication & Role-Based Route Guards**  
+  - [x] Construct `/login` and `/register` client views with form validation.  
+  - [x] Implement Route Handlers (`/api/auth/session`) to store JWTs inside secure `HTTP-Only` cookies.  
+  - [x] Write Next.js `middleware.ts` to enforce role-aware redirects (`PROVIDER` \-\> `/provider/dashboard`, `/provider/schedule`; `CLIENT` \-\> `/providers`, `/my-bookings`).  
+- [x] **Milestone 3: Provider Schedule Configuration Workspace (`/provider/schedule`)**  
+  - [x] Build interactive weekly availability grid.  
+  - [x] Provide day toggle controls, time pickers (`startTime`, `endTime`), and slot length selectors (`15m`, `30m`, `60m`).  
+  - [x] Wire form actions to `PUT /api/providers/schedule`.  
+- [x] **Milestone 4: Provider Operational Dashboard (`/provider/dashboard`)**  
+  - [x] Implement Server Components to pre-fetch daily schedules and booking queues (`GET /api/appointments/me?date=YYYY-MM-DD`).  
+  - [x] Integrate interactive state toggles (`Start`, `Complete`, `Cancel`) with optimistic UI updates and server action revalidation for live queue management.  
+- [x] **Milestone 5: Client Booking & Appointment Hub (`/providers` & `/my-bookings`)**  
+  - [x] Build Provider Directory page (`/providers`) and interactive Slot Picker view (`/providers/[id]`) with date selector, available slot grid, and `409 Conflict` alert \+ automatic slot refresh.  
+  - [x] Build Client Appointment Hub (`/my-bookings`) with `Upcoming` and `Past` tabs and self-service cancellation modal.
 
 ---
 
@@ -454,7 +454,7 @@ Building both Provider and Client views in Next.js serves as a hands-on learning
 | **7\. Project Skeletons & Local Env** | `DONE` | Scaffolded & verified `/infra` (PG 16 loopback compose), `/backend` (Spring Boot 3.5.16 + Flyway `V1__init_schema.sql`), `/web` (Next.js App Router + Tailwind tokens + locked API types), `/mobile` (Flutter feature-first + `AppTheme` + `Dio`/`TokenStorage`); `./mvnw test`, `tsc`/`lint`/`build`, `flutter analyze`/`test`, and `security_check.sh` all passed |
 | **8\. Backend Foundation & Auth** | `DONE` | `@RestControllerAdvice` envelope (+ 401/403 filter-chain handlers), `JwtService` (fail-fast ≥32-byte secret), `JwtAuthenticationFilter` (loads user from DB), `/api/auth/{register,login,me}`, `@EnableMethodSecurity`, BCrypt + timing-safe generic login failure. 13 tests pass (`./mvnw clean test`) + `security_check.sh` passed. Integration tests use H2 (PostgreSQL mode, Flyway off) since Docker is unavailable locally; Testcontainers-on-Postgres coverage of `idx_unique_active_slot` deferred to Step 9 |
 | **9\. Backend Core Domain & Logic** | `DONE` | `SlotCalculationService` (provider IANA zone, injected `Clock`, remainder dropped, active-slot exclusion); provider/schedule/slots endpoints (atomic schedule replace; 400 on duplicate day, bad window/duration/tz); booking in `@Transactional` with pre-check + `saveAndFlush` race → sanitized 409; `/api/appointments/{me,start,complete,cancel}` with principal-derived ownership (403) and state machine (409). 25 tests + `security_check.sh` pass. `PostgresSlotConstraintIT` (Testcontainers) written but skipped locally (no Docker) — run it where Docker exists |
-| **10\. Web Frontend (Next.js)** | `TODO` |  |
+| **10\. Web Frontend (Next.js)** | `DONE` | Built UI primitives (`Button`, `Input`/`Select`, `Card`, `Badge`, `Modal`, `AlertBanner`/`EmptyState`/`Skeleton`) & stateful `Navbar` shell; BFF `HttpOnly` cookie session (`/api/auth/session`) + Next.js 16 `src/proxy.ts` role guards (replaces legacy `middleware.ts`) backed by server `requireUser()` checks; `/login`, `/register`, `/provider/schedule` (weekly grid + slot counts → `PUT /api/providers/schedule`), `/provider/dashboard` (RSC daily queue + `useOptimistic` Start/Complete/Cancel actions), `/providers`, `/providers/[id]` (live slot picker + `409 Conflict` banner & auto-refresh), and `/my-bookings` (`Upcoming`/`Past` tabs + cancel modal). `eslint`, `tsc --noEmit`, `next build`, and `security_check.sh` all passed |
 | **11\. Mobile App (Flutter)** | `TODO` |  |
 | **12\. Cross-Platform E2E QA** | `TODO` |  |
 | **13\. Containerize, CI/CD & Deploy** | `TODO` |  |
