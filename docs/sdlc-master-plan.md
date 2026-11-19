@@ -361,17 +361,17 @@ Building both Provider and Client views in Next.js serves as a hands-on learning
   - [x] Scaffold feature-first structure: `core/`, `features/auth/`, `features/providers/`, `features/booking/`, `features/appointments/`.  
   - [x] Define global `ThemeData` aligning with shared brand design tokens.  
   - [x] Configure `Dio` instance equipped with automatic auth interceptors and token storage via `flutter_secure_storage`.  
-- [ ] **Milestone 2: Mobile Authentication Flow**  
-  - [ ] Implement UI screens for Login and Registration.  
-  - [ ] Integrate BLoC state management to handle authentication lifecycle states (`Unauthenticated`, `Authenticating`, `Authenticated`).  
-  - [ ] Implement silent auto-login check (`GET /api/auth/me`) on app bootstrap.  
-- [ ] **Milestone 3: Discovery & Dynamic Slot Selection**  
-  - [ ] Construct Provider Directory list screen (`GET /api/providers`).  
-  - [ ] Create interactive Slot Picker screen featuring a horizontal date selection bar and responsive grid of available time chips (`GET /api/providers/{id}/slots?date=YYYY-MM-DD`).  
-  - [ ] Implement robust error handling: Catch `409 Conflict` exceptions, present a user alert, and refresh available slots dynamically.  
-- [ ] **Milestone 4: My Bookings Management Hub**  
-  - [ ] Build tabbed operational view (`Upcoming` vs `Past`) consuming `GET /api/appointments/me`.  
-  - [ ] Add pull-to-refresh functionality and bottom-sheet cancellation confirmation flows (`PATCH /api/appointments/{id}/cancel`).
+- [x] **Milestone 2: Mobile Authentication Flow**  
+  - [x] Implement UI screens for Login and Registration.  
+  - [x] Integrate BLoC state management to handle authentication lifecycle states (`Unauthenticated`, `Authenticating`, `Authenticated`).  
+  - [x] Implement silent auto-login check (`GET /api/auth/me`) on app bootstrap.  
+- [x] **Milestone 3: Discovery & Dynamic Slot Selection**  
+  - [x] Construct Provider Directory list screen (`GET /api/providers`).  
+  - [x] Create interactive Slot Picker screen featuring a horizontal date selection bar and responsive grid of available time chips (`GET /api/providers/{id}/slots?date=YYYY-MM-DD`).  
+  - [x] Implement robust error handling: Catch `409 Conflict` exceptions, present a user alert, and refresh available slots dynamically.  
+- [x] **Milestone 4: My Bookings Management Hub**  
+  - [x] Build tabbed operational view (`Upcoming` vs `Past`) consuming `GET /api/appointments/me`.  
+  - [x] Add pull-to-refresh functionality and bottom-sheet cancellation confirmation flows (`PATCH /api/appointments/{id}/cancel`).
 
 ---
 
@@ -455,6 +455,6 @@ Building both Provider and Client views in Next.js serves as a hands-on learning
 | **8\. Backend Foundation & Auth** | `DONE` | `@RestControllerAdvice` envelope (+ 401/403 filter-chain handlers), `JwtService` (fail-fast ≥32-byte secret), `JwtAuthenticationFilter` (loads user from DB), `/api/auth/{register,login,me}`, `@EnableMethodSecurity`, BCrypt + timing-safe generic login failure. 13 tests pass (`./mvnw clean test`) + `security_check.sh` passed. Integration tests use H2 (PostgreSQL mode, Flyway off) since Docker is unavailable locally; Testcontainers-on-Postgres coverage of `idx_unique_active_slot` deferred to Step 9 |
 | **9\. Backend Core Domain & Logic** | `DONE` | `SlotCalculationService` (provider IANA zone, injected `Clock`, remainder dropped, active-slot exclusion); provider/schedule/slots endpoints (atomic schedule replace; 400 on duplicate day, bad window/duration/tz); booking in `@Transactional` with pre-check + `saveAndFlush` race → sanitized 409; `/api/appointments/{me,start,complete,cancel}` with principal-derived ownership (403) and state machine (409). 25 tests + `security_check.sh` pass. `PostgresSlotConstraintIT` (Testcontainers) written but skipped locally (no Docker) — run it where Docker exists |
 | **10\. Web Frontend (Next.js)** | `DONE` | Built UI primitives (`Button`, `Input`/`Select`, `Card`, `Badge`, `Modal`, `AlertBanner`/`EmptyState`/`Skeleton`) & stateful `Navbar` shell; BFF `HttpOnly` cookie session (`/api/auth/session`) + Next.js 16 `src/proxy.ts` role guards (replaces legacy `middleware.ts`) backed by server `requireUser()` checks; `/login`, `/register`, `/provider/schedule` (weekly grid + slot counts → `PUT /api/providers/schedule`), `/provider/dashboard` (RSC daily queue + `useOptimistic` Start/Complete/Cancel actions), `/providers`, `/providers/[id]` (live slot picker + `409 Conflict` banner & auto-refresh), and `/my-bookings` (`Upcoming`/`Past` tabs + cancel modal). `eslint`, `tsc --noEmit`, `next build`, and `security_check.sh` all passed |
-| **11\. Mobile App (Flutter)** | `TODO` |  |
+| **11\. Mobile App (Flutter)** | `DONE` | `AuthBloc` (`Unauthenticated`/`Authenticating`/`Authenticated`, silent `GET /api/auth/me` bootstrap, Dio 401 → `SessionExpired`), Login/Register (client-only), provider directory + search, slot picker (14-day date bar, time chip grid, confirm dialog, `409` → snackbar + auto-refetch), My Bookings (`Upcoming`/`Past`, pull-to-refresh, bottom-sheet cancel). Provider accounts see a web-portal notice. 7 tests pass (`flutter test`; `flutter analyze` has 0 errors/warnings, only SDK-3.50 `material.dart` deprecation infos) + `security_check.sh` passed. Verified on Flutter 3.50 in a cloud VM; `pubspec.lock` left untouched |
 | **12\. Cross-Platform E2E QA** | `TODO` |  |
 | **13\. Containerize, CI/CD & Deploy** | `TODO` |  |
