@@ -39,6 +39,3 @@ mobile/android/local.properties
 # Temp & Coverage
 tmp/
 coverage/
-
-# AI / Knowledge Graph Tooling
-graphify-out/

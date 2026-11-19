@@ -1,0 +1,271 @@
+{
+  "generated_at": "2026-11-18T21:14:33.523010+00:00",
+  "nodes": {
+    "agent_skills_business_analyst_skill_business_analyst": {
+      "code_fingerprint": "efc5baed952ec074d35bb8b94e7c8116ae3819fb86912f30ab57b1d0c932734a",
+      "label": "Business Analyst Skill (Red-Team Spec Auditor)",
+      "last": "2026-11-18T21:14:33.393562+00:00",
+      "provenance": [
+        {
+          "date": "2026-11-18T21:14:33.393562+00:00",
+          "outcome": "useful",
+          "q": "Why does Tech Lead Skill (Milestone Executor & Orchestrator) connect SDLC Playbook & Security Gatekeeping to Domain Schema, Slot Engine & APIs, AI Governance & Backend Architecture?"
+        }
+      ],
+      "score": 0.999999965,
+      "source_file": ".agent/skills/business-analyst/SKILL.md",
+      "status": "tentative",
+      "uses": 1
+    },
+    "agent_skills_flutter_bloc_clean_skill_flutter": {
+      "code_fingerprint": "ade979bc5f464a85702a0c9abef4d3524d8c5bfbedab33a7045ec95b2957b7fe",
+      "label": "Flutter BLoC Clean Architecture Skill (Flutter 3.x)",
+      "last": "2026-11-18T21:14:32.887113+00:00",
+      "provenance": [
+        {
+          "date": "2026-11-18T21:14:32.887113+00:00",
+          "outcome": "useful",
+          "q": "Are the 4 inferred relationships involving Next.js App Router Skill (TypeScript & Tailwind) actually correct?"
+        }
+      ],
+      "score": 0.99999983,
+      "source_file": ".agent/skills/flutter-bloc-clean/SKILL.md",
+      "status": "tentative",
+      "uses": 1
+    },
+    "agent_skills_nextjs_app_router_skill_nextjs": {
+      "code_fingerprint": "c503676e538f497cdbcff617fa7c455244308e8c16e0082f11b9e557ce4d785e",
+      "label": "Next.js App Router Skill (TypeScript & Tailwind)",
+      "last": "2026-11-18T21:14:32.887113+00:00",
+      "provenance": [
+        {
+          "date": "2026-11-18T21:14:32.887113+00:00",
+          "outcome": "useful",
+          "q": "Are the 4 inferred relationships involving Next.js App Router Skill (TypeScript & Tailwind) actually correct?"
+        }
+      ],
+      "score": 0.99999983,
+      "source_file": ".agent/skills/nextjs-app-router/SKILL.md",
+      "status": "tentative",
+      "uses": 1
+    },
+    "agent_skills_security_auditor_scripts_security_check": {
+      "code_fingerprint": "05e92da25678b59c9bc6c7c68e9985e89aed144dbc7d62f102d3b7e75637c355",
+      "label": "security_check.sh",
+      "last": "2026-11-18T21:14:33.393562+00:00",
+      "provenance": [
+        {
+          "date": "2026-11-18T21:14:33.393562+00:00",
+          "outcome": "useful",
+          "q": "Why does Tech Lead Skill (Milestone Executor & Orchestrator) connect SDLC Playbook & Security Gatekeeping to Domain Schema, Slot Engine & APIs, AI Governance & Backend Architecture?"
+        }
+      ],
+      "score": 0.999999965,
+      "source_file": ".agent/skills/security-auditor/scripts/security_check.sh",
+      "status": "tentative",
+      "uses": 1
+    },
+    "agent_skills_security_auditor_skill_bff_cookie_pattern": {
+      "code_fingerprint": "2f3c00a4a6871ea76096f9fa00523257144f2e4a47bd7cccb37f1d312014aebe",
+      "label": "Next.js BFF HttpOnly Cookie-to-Bearer Pattern",
+      "last": "2026-11-18T21:14:32.887113+00:00",
+      "provenance": [
+        {
+          "date": "2026-11-18T21:14:32.887113+00:00",
+          "outcome": "useful",
+          "q": "Are the 4 inferred relationships involving Next.js App Router Skill (TypeScript & Tailwind) actually correct?"
+        }
+      ],
+      "score": 0.99999983,
+      "source_file": ".agent/skills/security-auditor/SKILL.md",
+      "status": "tentative",
+      "uses": 1
+    },
+    "agent_skills_security_auditor_skill_security_auditor": {
+      "code_fingerprint": "2f3c00a4a6871ea76096f9fa00523257144f2e4a47bd7cccb37f1d312014aebe",
+      "label": "Security Auditor Skill (6 Catastrophic Red Lines)",
+      "last": "2026-11-18T21:14:33.393562+00:00",
+      "provenance": [
+        {
+          "date": "2026-11-18T21:14:33.393562+00:00",
+          "outcome": "useful",
+          "q": "Why does Tech Lead Skill (Milestone Executor & Orchestrator) connect SDLC Playbook & Security Gatekeeping to Domain Schema, Slot Engine & APIs, AI Governance & Backend Architecture?"
+        }
+      ],
+      "score": 0.999999965,
+      "source_file": ".agent/skills/security-auditor/SKILL.md",
+      "status": "tentative",
+      "uses": 1
+    },
+    "agent_skills_tech_lead_skill_tech_lead": {
+      "code_fingerprint": "55b8374a266734eb2744e148495092c229a72100b1346047202670cefd7ac3b0",
+      "label": "Tech Lead Skill (Milestone Executor & Orchestrator)",
+      "last": "2026-11-18T21:14:33.393562+00:00",
+      "provenance": [
+        {
+          "date": "2026-11-18T21:14:33.393562+00:00",
+          "outcome": "useful",
+          "q": "Why does Tech Lead Skill (Milestone Executor & Orchestrator) connect SDLC Playbook & Security Gatekeeping to Domain Schema, Slot Engine & APIs, AI Governance & Backend Architecture?"
+        },
+        {
+          "date": "2026-11-18T21:14:32.680057+00:00",
+          "outcome": "useful",
+          "q": "Why does SDLC Master Plan: Appointment & Queue Booking System connect Domain Schema, Slot Engine & APIs to SDLC Playbook & Security Gatekeeping, AI Governance & Backend Architecture, Cross-Platform UI & Error Envelope?"
+        }
+      ],
+      "score": 1.99999974,
+      "source_file": ".agent/skills/tech-lead/SKILL.md",
+      "status": "preferred",
+      "uses": 2
+    },
+    "agents_contract_first_rule": {
+      "code_fingerprint": "6f71f45286e82f2ba5118844a0cdc46079005d8dfa2840f47aa6a1abce71edc5",
+      "label": "Contract-First Execution Rule",
+      "last": "2026-11-18T21:14:33.234710+00:00",
+      "provenance": [
+        {
+          "date": "2026-11-18T21:14:33.234710+00:00",
+          "outcome": "useful",
+          "q": "Why does AGENTS.md Root AI Governance & Monorepo Router connect AI Governance & Backend Architecture to SDLC Playbook & Security Gatekeeping, Domain Schema, Slot Engine & APIs, Cross-Platform UI & Error Envelope?"
+        }
+      ],
+      "score": 0.999999923,
+      "source_file": "AGENTS.md",
+      "status": "tentative",
+      "uses": 1
+    },
+    "agents_root_governance": {
+      "code_fingerprint": "6f71f45286e82f2ba5118844a0cdc46079005d8dfa2840f47aa6a1abce71edc5",
+      "label": "AGENTS.md Root AI Governance & Monorepo Router",
+      "last": "2026-11-18T21:14:33.234710+00:00",
+      "provenance": [
+        {
+          "date": "2026-11-18T21:14:33.234710+00:00",
+          "outcome": "useful",
+          "q": "Why does AGENTS.md Root AI Governance & Monorepo Router connect AI Governance & Backend Architecture to SDLC Playbook & Security Gatekeeping, Domain Schema, Slot Engine & APIs, Cross-Platform UI & Error Envelope?"
+        },
+        {
+          "date": "2026-11-18T21:14:32.680057+00:00",
+          "outcome": "useful",
+          "q": "Why does SDLC Master Plan: Appointment & Queue Booking System connect Domain Schema, Slot Engine & APIs to SDLC Playbook & Security Gatekeeping, AI Governance & Backend Architecture, Cross-Platform UI & Error Envelope?"
+        }
+      ],
+      "score": 1.999999697,
+      "source_file": "AGENTS.md",
+      "status": "preferred",
+      "uses": 2
+    },
+    "agents_skill_portability_rule": {
+      "code_fingerprint": "6f71f45286e82f2ba5118844a0cdc46079005d8dfa2840f47aa6a1abce71edc5",
+      "label": "100% Project-Agnostic Skill Portability Rule",
+      "last": "2026-11-18T21:14:33.234710+00:00",
+      "provenance": [
+        {
+          "date": "2026-11-18T21:14:33.234710+00:00",
+          "outcome": "useful",
+          "q": "Why does AGENTS.md Root AI Governance & Monorepo Router connect AI Governance & Backend Architecture to SDLC Playbook & Security Gatekeeping, Domain Schema, Slot Engine & APIs, Cross-Platform UI & Error Envelope?"
+        }
+      ],
+      "score": 0.999999923,
+      "source_file": "AGENTS.md",
+      "status": "tentative",
+      "uses": 1
+    },
+    "docs_full_stack_project_playbook_skeletons_env": {
+      "code_fingerprint": "5a6da4e51e56ac85d0b0bfe198c7a6e6eec94a3810f1649ce2416fd0b4d74fd5",
+      "label": "Step 7 Project Skeletons & Local Environment",
+      "last": "2026-11-18T21:14:33.081174+00:00",
+      "provenance": [
+        {
+          "date": "2026-11-18T21:14:33.081174+00:00",
+          "outcome": "useful",
+          "q": "What connects Docker Compose & Nginx Orchestration Architecture to the rest of the system?"
+        }
+      ],
+      "score": 0.999999882,
+      "source_file": "docs/full-stack-project-playbook.md",
+      "status": "tentative",
+      "uses": 1
+    },
+    "docs_sdlc_master_plan_design_system": {
+      "code_fingerprint": "fb0a8953047007d6fd4ba1ab3f6bbdf386e3fd3fffff54d02597748d330e0e8a",
+      "label": "Shared Design System & Color Tokens",
+      "last": "2026-11-18T21:14:32.887113+00:00",
+      "provenance": [
+        {
+          "date": "2026-11-18T21:14:32.887113+00:00",
+          "outcome": "useful",
+          "q": "Are the 4 inferred relationships involving Next.js App Router Skill (TypeScript & Tailwind) actually correct?"
+        },
+        {
+          "date": "2026-11-18T21:14:32.680057+00:00",
+          "outcome": "useful",
+          "q": "Why does SDLC Master Plan: Appointment & Queue Booking System connect Domain Schema, Slot Engine & APIs to SDLC Playbook & Security Gatekeeping, AI Governance & Backend Architecture, Cross-Platform UI & Error Envelope?"
+        }
+      ],
+      "score": 1.999999605,
+      "source_file": "docs/sdlc-master-plan.md",
+      "status": "preferred",
+      "uses": 2
+    },
+    "docs_sdlc_master_plan_docker_deployment": {
+      "code_fingerprint": "fb0a8953047007d6fd4ba1ab3f6bbdf386e3fd3fffff54d02597748d330e0e8a",
+      "label": "Docker Compose & Nginx Orchestration Architecture",
+      "last": "2026-11-18T21:14:33.081174+00:00",
+      "provenance": [
+        {
+          "date": "2026-11-18T21:14:33.081174+00:00",
+          "outcome": "useful",
+          "q": "What connects Docker Compose & Nginx Orchestration Architecture to the rest of the system?"
+        }
+      ],
+      "score": 0.999999882,
+      "source_file": "docs/sdlc-master-plan.md",
+      "status": "tentative",
+      "uses": 1
+    },
+    "docs_sdlc_master_plan_error_envelope": {
+      "code_fingerprint": "fb0a8953047007d6fd4ba1ab3f6bbdf386e3fd3fffff54d02597748d330e0e8a",
+      "label": "Standard Error Envelope (@RestControllerAdvice)",
+      "last": "2026-11-18T21:14:32.887113+00:00",
+      "provenance": [
+        {
+          "date": "2026-11-18T21:14:32.887113+00:00",
+          "outcome": "useful",
+          "q": "Are the 4 inferred relationships involving Next.js App Router Skill (TypeScript & Tailwind) actually correct?"
+        },
+        {
+          "date": "2026-11-18T21:14:32.680057+00:00",
+          "outcome": "useful",
+          "q": "Why does SDLC Master Plan: Appointment & Queue Booking System connect Domain Schema, Slot Engine & APIs to SDLC Playbook & Security Gatekeeping, AI Governance & Backend Architecture, Cross-Platform UI & Error Envelope?"
+        }
+      ],
+      "score": 1.999999605,
+      "source_file": "docs/sdlc-master-plan.md",
+      "status": "preferred",
+      "uses": 2
+    },
+    "docs_sdlc_master_plan_master_plan": {
+      "code_fingerprint": "fb0a8953047007d6fd4ba1ab3f6bbdf386e3fd3fffff54d02597748d330e0e8a",
+      "label": "SDLC Master Plan: Appointment & Queue Booking System",
+      "last": "2026-11-18T21:14:33.081174+00:00",
+      "provenance": [
+        {
+          "date": "2026-11-18T21:14:33.081174+00:00",
+          "outcome": "useful",
+          "q": "What connects Docker Compose & Nginx Orchestration Architecture to the rest of the system?"
+        },
+        {
+          "date": "2026-11-18T21:14:32.680057+00:00",
+          "outcome": "useful",
+          "q": "Why does SDLC Master Plan: Appointment & Queue Booking System connect Domain Schema, Slot Engine & APIs to SDLC Playbook & Security Gatekeeping, AI Governance & Backend Architecture, Cross-Platform UI & Error Envelope?"
+        }
+      ],
+      "score": 1.999999656,
+      "source_file": "docs/sdlc-master-plan.md",
+      "status": "preferred",
+      "uses": 2
+    }
+  },
+  "version": 1
+}
